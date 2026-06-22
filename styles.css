@@ -566,8 +566,21 @@ select {
 
   .status-grid { grid-template-columns: 1fr 1fr; }
   .section-head { flex-direction: column; }
-  .game-header { grid-template-columns: auto 1fr; }
-  .game-header .icon-button:last-child { grid-column: 1 / -1; justify-self: end; }
+  .game-header {
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+  }
+
+  .game-header .icon-button:last-child {
+    grid-column: 1 / -1;
+    justify-self: end;
+  }
+
+  .game-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 
   .rules-card,
   .opponents-card,
@@ -578,6 +591,28 @@ select {
   .home-actions button,
   .actions button {
     min-height: 44px;
+  }
+
+  .actions {
+    position: sticky;
+    bottom: calc(8px + env(safe-area-inset-bottom));
+    z-index: 20;
+    padding: 10px;
+    margin-top: 2px;
+    border-radius: 22px;
+    background: rgba(7, 10, 24, 0.74);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24), inset 0 0 0 1px rgba(255,255,255,0.08);
+  }
+
+  .actions .primary,
+  .actions .secondary {
+    min-height: 48px;
+  }
+
+  .actions .primary {
+    background: linear-gradient(135deg, #ffe08a 0%, #8a75ff 45%, #67ddff 100%);
+    color: #fff;
   }
 
   .settings-card,
