@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Big Two Moon Market icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffe08a"/>
+      <stop offset="50%" stop-color="#8a75ff"/>
+      <stop offset="100%" stop-color="#67ddff"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#edf2fb"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="118" fill="#081127"/>
+  <circle cx="256" cy="256" r="186" fill="url(#bg)" opacity="0.95"/>
+  <circle cx="370" cy="122" r="58" fill="#fff6bf" opacity="0.92"/>
+  <circle cx="387" cy="104" r="58" fill="#081127" opacity="0.2"/>
+  <rect x="98" y="120" width="146" height="212" rx="30" transform="rotate(-12 98 120)" fill="url(#card)" stroke="#171f38" stroke-width="10"/>
+  <rect x="268" y="184" width="146" height="212" rx="30" transform="rotate(12 268 184)" fill="url(#card)" stroke="#171f38" stroke-width="10"/>
+  <text x="137" y="188" font-family="Arial, sans-serif" font-size="68" font-weight="700" fill="#8a75ff">3</text>
+  <text x="164" y="257" font-family="Arial, sans-serif" font-size="88" font-weight="700" fill="#8a75ff">♦</text>
+  <text x="293" y="312" font-family="Arial, sans-serif" font-size="68" font-weight="700" fill="#171f38">2</text>
+  <text x="321" y="381" font-family="Arial, sans-serif" font-size="88" font-weight="700" fill="#171f38">♠</text>
+</svg>

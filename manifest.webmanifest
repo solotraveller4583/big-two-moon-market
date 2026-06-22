@@ -1,0 +1,17 @@
+{
+  "name": "Big Two Moon Market",
+  "short_name": "Moon Market",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#140f2b",
+  "theme_color": "#140f2b",
+  "description": "A vivid, playful Big Two card game with AI rivals and moonlit oracle flair.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

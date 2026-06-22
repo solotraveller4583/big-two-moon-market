@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#16102f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Big Two Moon Market" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="description" content="Big Two Moon Market is a magical Big Two card game with oracle AI rivals, lunar glow, and combo fireworks." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=(), magnetometer=()" />
+  <title>Big Two Moon Market</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section class="panel hero" id="home-screen">
+      <div class="hero-top">
+        <div class="mascot-wrap" aria-hidden="true">
+          <svg viewBox="0 0 240 240" class="mascot" role="img" aria-label="Moon market mascot">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fffa9a"/>
+                <stop offset="45%" stop-color="#ff76d7"/>
+                <stop offset="100%" stop-color="#7c7dff"/>
+              </linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#76ffd7"/>
+                <stop offset="100%" stop-color="#11b47b"/>
+              </linearGradient>
+            </defs>
+            <rect x="18" y="18" width="204" height="204" rx="56" fill="url(#g1)" opacity="0.96"/>
+            <circle cx="84" cy="88" r="24" fill="#1f173b"/>
+            <circle cx="156" cy="88" r="24" fill="#1f173b"/>
+            <path d="M70 143c17 22 83 22 100 0" fill="none" stroke="#1f173b" stroke-width="14" stroke-linecap="round"/>
+            <path d="M58 66l18-28 14 23" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+            <path d="M182 66l-18-28-14 23" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+            <rect x="94" y="160" width="52" height="34" rx="12" fill="url(#g2)"/>
+            <circle cx="120" cy="170" r="8" fill="#1f173b"/>
+            <path d="M92 54c6-18 23-31 44-31 21 0 38 13 44 31" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/>
+          </svg>
+          <div class="mascot-tag">AI-designed moonlit vibe</div>
+        </div>
+        <div>
+          <p class="eyebrow">LUNAR SHELTER</p>
+          <h1>Big Two Moon Market</h1>
+          <p class="intro">A moonlit Big Two bazaar where oracle bots haggle, lanterns shimmer, and every strong combo feels like a spell. Play the 3♦ and clear your hand before dawn breaks.</p>
+        </div>
+      </div>
+
+      <div class="feature-strip" aria-label="Game highlights">
+        <span>3♦ starts</span>
+        <span>2–4 players</span>
+        <span>Moonlit combos</span>
+      </div>
+
+      <section class="settings-card" aria-label="Game settings">
+        <label>
+          Market size
+          <select id="player-count" aria-label="Number of players">
+            <option value="4" selected>4 players — classic table</option>
+            <option value="3">3 players — quicker showdown</option>
+            <option value="2">2 players — head-to-head duel</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="rules-card" aria-label="Quick rules">
+        <h2>Market rules</h2>
+        <ul>
+          <li>The first move must be a single <strong>3♦</strong>.</li>
+          <li>Beat the current trick with the same size hand.</li>
+          <li>Use straights, flushes, full houses, quads, or straight flushes to overpower the table.</li>
+          <li>When nobody can beat the trick, the last winner leads the next round.</li>
+        </ul>
+      </section>
+
+      <div class="home-actions" aria-label="Main actions">
+        <button class="primary" id="start-button">Start New Market</button>
+        <button class="ghost hidden" id="continue-button">Continue Market</button>
+        <button class="ghost" id="rules-button">How to Play</button>
+        <button class="ghost" id="share-button">Share</button>
+      </div>
+
+      <nav class="footer-links" aria-label="Legal links">
+        <a href="privacy.html">Privacy</a>
+        <span>•</span>
+        <a href="terms.html">Terms</a>
+        <span>•</span>
+        <a href="credits.html">Credits</a>
+      </nav>
+    </section>
+
+    <section class="panel game-screen hidden" id="game-screen" aria-label="Big Two table">
+      <header class="game-header">
+        <button class="icon-button" id="back-button" aria-label="Back to menu">‹</button>
+        <div class="header-copy">
+          <p class="eyebrow" id="turn-label">Ready</p>
+          <h2 id="table-title">Moon Market Table</h2>
+          <p class="header-subtitle" id="table-subtitle">Beat the trick or let the market drift to the next stall.</p>
+        </div>
+        <button class="icon-button" id="sound-button" aria-label="Toggle sound">🔊</button>
+      </header>
+
+      <section class="heat-card" aria-label="Crowd energy">
+        <div class="heat-head">
+          <div>
+            <strong>Lunar Glow</strong>
+            <p id="heat-text">The moonlit crowd is waiting for a spark.</p>
+          </div>
+          <span id="heat-value">0%</span>
+        </div>
+        <div class="heat-bar" aria-hidden="true">
+          <div id="heat-fill" class="heat-fill"></div>
+        </div>
+      </section>
+
+      <section class="status-grid" aria-label="Match status">
+        <div class="status-card">
+          <span id="player-left-count">13</span>
+          <small>Your cards</small>
+        </div>
+        <div class="status-card">
+          <span id="trick-count">Open</span>
+          <small>Current trick</small>
+        </div>
+        <div class="status-card">
+          <span id="round-count">1</span>
+          <small>Round</small>
+        </div>
+        <div class="status-card">
+          <span id="spark-count">0</span>
+          <small>Sparks</small>
+        </div>
+      </section>
+
+      <section class="trick-card" aria-label="Current trick">
+        <div class="section-head">
+          <h2>The current bargain</h2>
+          <p id="trick-help">Lead the opening move with 3♦.</p>
+        </div>
+        <div id="trick-play" class="trick-play empty">The market is quiet. The opening player must lead 3♦.</div>
+        <div id="trick-meta" class="trick-meta"></div>
+      </section>
+
+      <section class="opponents-card" aria-label="Other players">
+        <div class="section-head">
+          <h2>The market line</h2>
+          <p>Oracle AI players will jump in automatically.</p>
+        </div>
+        <div id="opponent-area" class="opponent-list"></div>
+      </section>
+
+      <section class="center-card" aria-label="Play log">
+        <div class="section-head">
+          <h2>Oracle chatter</h2>
+          <p>Play-by-play from the moonlit crowd.</p>
+        </div>
+        <div id="log-list" class="log-list" aria-live="polite"></div>
+      </section>
+
+      <section class="hand-card" aria-label="Your hand">
+        <div class="hand-head">
+          <div>
+            <h2>Your hand</h2>
+            <p>Tap cards to select them, then launch the move.</p>
+          </div>
+          <span id="selected-count" class="pill">0 selected</span>
+        </div>
+        <div id="hand" class="hand" aria-label="Cards in your hand"></div>
+      </section>
+
+      <div class="actions">
+        <button class="primary" id="play-button">Play Selected</button>
+        <button class="secondary" id="pass-button">Pass</button>
+        <button class="secondary" id="hint-button">Ask Oracle</button>
+        <button class="secondary" id="sort-button">Sort Hand</button>
+        <button class="secondary" id="restart-button">New Market</button>
+      </div>
+    </section>
+
+    <dialog id="help-dialog">
+      <form method="dialog" class="dialog-card">
+        <h2 id="help-title">How to Play</h2>
+        <div id="help-text" class="help-copy"></div>
+        <menu>
+          <button class="primary" value="ok">Got it</button>
+        </menu>
+      </form>
+    </dialog>
+  </main>
+
+  <script src="game.js" defer></script>
+</body>
+</html>
