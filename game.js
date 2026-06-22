@@ -599,22 +599,18 @@
     button.className = `card-tile ${card.color}`;
     button.dataset.cardId = card.id;
     button.setAttribute('aria-label', card.label);
+
     const rank = document.createElement('div');
     rank.className = 'card-rank';
     rank.textContent = card.rank;
+
     const suit = document.createElement('div');
     suit.className = 'card-suit';
     suit.textContent = card.suitSymbol;
-    const text = document.createElement('div');
-    text.className = 'card-text';
-    text.textContent = card.suitName;
-    const mini = document.createElement('div');
-    mini.className = 'card-mini';
-    mini.textContent = card.short;
+
     button.appendChild(rank);
     button.appendChild(suit);
-    button.appendChild(text);
-    button.appendChild(mini);
+
     if (!selectable) return button;
     if (state.selected.has(card.id)) button.classList.add('selected');
     button.addEventListener('click', () => toggleSelection(card.id));
