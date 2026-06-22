@@ -488,13 +488,56 @@ select {
 }
 
 @media (max-width: 560px) {
+  .app-shell {
+    width: min(100%, 100vw);
+    padding-inline: 10px;
+  }
+
+  .hero-top {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
   .feature-strip { grid-template-columns: 1fr; }
-  .home-actions, .actions { grid-template-columns: 1fr 1fr; }
+  .home-actions, .actions { grid-template-columns: 1fr; }
   .status-grid { grid-template-columns: 1fr 1fr; }
   .section-head { flex-direction: column; }
   .game-header { grid-template-columns: auto 1fr; }
   .game-header .icon-button:last-child { grid-column: 1 / -1; justify-self: end; }
   .mascot-wrap { width: 108px; }
   .mascot { width: 108px; height: 108px; }
-  .card-tile { width: 64px; height: 92px; }
+
+  .hand {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 10px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .card-tile {
+    width: 58px;
+    height: 84px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .card-suit { font-size: 1.6rem; }
+  .card-text { font-size: 0.72rem; }
+}
+
+@media (max-width: 380px) {
+  .status-grid { grid-template-columns: 1fr; }
+  .game-header {
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+  }
+  .game-header .icon-button {
+    width: 44px;
+    min-height: 44px;
+  }
+  .status-card span { font-size: 1.25rem; }
+  .status-card { min-height: 68px; }
+  .trick-play { min-height: 64px; }
 }
