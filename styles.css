@@ -560,11 +560,18 @@ select {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .status-grid { grid-template-columns: 1fr 1fr; }
+  .status-grid,
+  .heat-card,
+  .opponents-card,
+  .center-card {
+    display: none;
+  }
+
   .section-head { flex-direction: column; }
   .game-header {
     grid-template-columns: auto 1fr;
-    gap: 8px;
+    gap: 6px;
+    padding: 6px 0 0;
   }
 
   .game-header .icon-button:last-child {
@@ -575,27 +582,32 @@ select {
   .game-screen {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
   }
 
-  .rules-card,
-  .opponents-card,
-  .center-card {
+  .game-screen .header-subtitle,
+  .game-screen .trick-card .section-head p,
+  .game-screen .hand-card .hand-head p,
+  .game-screen .trick-meta {
+    display: none;
+  }
+
+  .rules-card {
     display: none;
   }
 
   .home-actions button,
   .actions button {
-    min-height: 44px;
+    min-height: 42px;
   }
 
   .actions {
     position: sticky;
     bottom: calc(8px + env(safe-area-inset-bottom));
     z-index: 20;
-    padding: 10px;
-    margin-top: 2px;
-    border-radius: 22px;
+    padding: 7px;
+    margin-top: 0;
+    border-radius: 18px;
     background: rgba(7, 10, 24, 0.74);
     backdrop-filter: blur(18px);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24), inset 0 0 0 1px rgba(255,255,255,0.08);
@@ -603,7 +615,8 @@ select {
 
   .actions .primary,
   .actions .secondary {
-    min-height: 48px;
+    min-height: 40px;
+    font-size: 0.88rem;
   }
 
   .actions .primary {
@@ -612,29 +625,47 @@ select {
   }
 
   .settings-card,
-  .heat-card,
   .trick-card,
   .hand-card {
-    padding: 12px;
+    padding: 9px;
+  }
+
+  .trick-play {
+    min-height: 50px;
+    padding: 8px;
+    font-size: 0.88rem;
+  }
+
+  .hand-head {
+    align-items: center;
+  }
+
+  .pill {
+    padding: 7px 10px;
+    font-size: 0.74rem;
   }
 
   .hand {
     flex-wrap: nowrap;
     overflow-x: auto;
     justify-content: flex-start;
-    padding-bottom: 10px;
+    padding-bottom: 6px;
     scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
+    gap: 6px;
   }
 
   .card-tile {
-    width: 58px;
-    height: 84px;
+    width: 50px;
+    height: 72px;
     flex: 0 0 auto;
     scroll-snap-align: start;
+    border-radius: 12px;
+    padding: 5px;
   }
 
-  .card-suit { font-size: 1.6rem; }
+  .card-rank { font-size: 0.86rem; }
+  .card-suit { font-size: 1.32rem; }
 }
 
 
