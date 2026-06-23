@@ -1,0 +1,83 @@
+/* Compact balance pass for Lucky2 casino landing */
+.casino-home {
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+}
+.royal-cards {
+  height: clamp(95px, 20vh, 168px);
+  margin-bottom: clamp(-34px, -5vh, -20px);
+}
+.royal-card {
+  width: clamp(62px, 12vw, 104px);
+  height: clamp(92px, 18vw, 145px);
+  border-radius: 18px;
+  padding: 10px;
+}
+.gold-two {
+  font-size: clamp(4.2rem, 13vw, 7.2rem);
+}
+.casino-logo h1 {
+  font-size: clamp(3.7rem, 13vw, 7rem);
+  line-height: .76;
+}
+.blue-ribbon {
+  padding: 6px 20px;
+  min-width: min(74vw, 380px);
+}
+.suit-row {
+  margin-top: 5px;
+}
+.play-now {
+  min-height: clamp(56px, 7vh, 76px);
+  width: min(100%, 500px);
+  font-size: clamp(1.55rem, 5.8vw, 2.55rem);
+}
+.menu-card {
+  min-height: clamp(74px, 10.5vh, 108px);
+}
+.player-panel {
+  padding: 12px;
+  gap: 8px;
+}
+.player-option {
+  min-height: clamp(70px, 9.8vh, 98px);
+}
+.casino-bottom a {
+  min-height: 42px;
+}
+
+@media (max-width: 560px) {
+  .casino-home { padding: 8px; gap: 5px; }
+  .casino-topbar { gap: 6px; }
+  .online-pill, .settings-pill { min-height: 36px; padding: 5px 9px; }
+  .royal-cards { height: clamp(96px, 20vh, 150px); margin-bottom: -28px; }
+  .royal-card { width: clamp(58px, 15vw, 76px); height: clamp(86px, 22vw, 112px); }
+  .gold-two { font-size: clamp(4rem, 19vw, 5.8rem); }
+  .casino-logo h1 { font-size: clamp(3.55rem, 17vw, 5.1rem); }
+  .blue-ribbon { min-width: 76vw; padding: 5px 14px; font-size: .68rem; }
+  .play-now { min-height: 50px; font-size: clamp(1.35rem, 7vw, 1.9rem); }
+  .quick-actions { gap: 6px; }
+  .menu-card { min-height: 62px; border-radius: 18px; }
+  .menu-card span { font-size: 1.35rem; }
+  .menu-card strong { font-size: .72rem; }
+  .player-panel { padding: 8px; gap: 5px; border-radius: 19px; }
+  .player-panel h2 { font-size: .82rem; }
+  .player-option { min-height: 58px; border-radius: 15px; }
+  .player-option span { font-size: 1.2rem; }
+  .player-option strong { font-size: .58rem; }
+  .casino-bottom a { min-height: 30px; font-size: 1rem; }
+}
+
+@media (max-height: 700px) {
+  .casino-home { gap: 5px; }
+  .online-pill small, .menu-card small, .player-option small { display: none; }
+  .suit-row { display: none; }
+  .royal-cards { height: 104px; margin-bottom: -30px; }
+  .royal-card { width: 62px; height: 92px; }
+  .gold-two { font-size: 4.8rem; }
+  .casino-logo h1 { font-size: 4.2rem; }
+  .blue-ribbon { font-size: .64rem; }
+  .play-now { min-height: 50px; }
+  .menu-card { min-height: 58px; }
+  .player-option { min-height: 54px; }
+  .casino-bottom a { min-height: 28px; }
+}

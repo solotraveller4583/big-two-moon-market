@@ -1,8 +1,14 @@
-const CACHE_NAME = 'big-two-moon-market-v10';
+const CACHE_NAME = 'lucky2-v8';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
+  './lucky2-casino.css',
+  './lucky2-casino-fix.css',
+  './lucky2-casino-fix2.css',
+  './lucky2-casino-portrait.css',
+  './lucky2-casino-landscape.css',
+  './lucky2-premium.css',
   './game.js',
   './manifest.webmanifest',
   './icon.svg',

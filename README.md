@@ -1,4 +1,4 @@
-# Big Two Arena
+# Lucky2
 
 A standalone browser game for the Big Two card game (also known as Deuces, Dai Di, or Pusoy Dos).
 

@@ -1,0 +1,166 @@
+/* Portrait-mobile art direction based on the user's casino reference */
+.casino-bottom a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 1000;
+  min-height: 54px;
+}
+.casino-bottom span { font-size: 1.4rem; }
+.casino-bottom strong { font-size: inherit; }
+
+@media (orientation: portrait) and (max-width: 620px) {
+  body { background: #06001b; }
+  .app-shell { padding: 0; width: 100%; min-height: 100dvh; }
+  .casino-home {
+    width: 100%;
+    min-height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    border-width: 0;
+    padding: max(12px, env(safe-area-inset-top)) 12px max(10px, env(safe-area-inset-bottom));
+    gap: 10px;
+    grid-template-rows: auto minmax(310px, 42dvh) 76px 108px minmax(156px, 21dvh) 58px;
+    background:
+      radial-gradient(circle at 50% 27%, rgba(255, 45, 238, .55), transparent 22%),
+      radial-gradient(circle at 50% 38%, rgba(28, 93, 255, .64), transparent 36%),
+      radial-gradient(circle at 9% 76%, rgba(255, 119, 23, .30), transparent 18%),
+      radial-gradient(circle at 94% 80%, rgba(255, 46, 138, .34), transparent 17%),
+      linear-gradient(180deg, #21006b 0%, #0b0043 45%, #080026 100%);
+  }
+  .casino-bg-card {
+    width: 84px;
+    height: 116px;
+    opacity: .48;
+  }
+  .bg-left { left: -44px; top: 17%; }
+  .bg-right { right: -42px; top: 14%; }
+  .chip-a { left: -28px; bottom: 10%; }
+  .chip-b { right: -26px; bottom: 11%; }
+  .casino-topbar { min-height: 52px; }
+  .online-pill, .settings-pill {
+    min-height: 52px;
+    border-radius: 26px;
+    padding: 8px 14px;
+  }
+  .settings-pill span { display: inline; font-size: .95rem; }
+  .avatar-stack b { width: 29px; height: 29px; font-size: .9rem; }
+  .online-pill strong { font-size: .98rem; }
+  .online-pill small { display: block; font-size: .72rem; }
+
+  .casino-logo {
+    align-content: end;
+    padding-bottom: 2px;
+  }
+  .royal-cards {
+    width: 96vw;
+    height: 198px;
+    margin-bottom: -56px;
+  }
+  .royal-card {
+    width: 104px;
+    height: 152px;
+    border-radius: 24px;
+    padding: 14px;
+  }
+  .royal-card strong { font-size: 1.8rem; }
+  .royal-card span { font-size: 4rem; }
+  .rc-three { left: 13%; transform: rotate(-16deg); }
+  .rc-ace { left: 29%; transform: rotate(-8deg); }
+  .rc-two { left: 46%; transform: rotate(1deg); z-index: 3; }
+  .gold-two {
+    right: 7%;
+    bottom: -5px;
+    font-size: 7.8rem;
+    text-shadow: 0 8px 0 #8f36d6, 0 16px 0 #12087a, 0 22px 38px rgba(0,0,0,.48);
+  }
+  .crown { top: -34px; right: -8px; }
+  .casino-logo h1 {
+    font-size: 6.9rem;
+    line-height: .72;
+    text-shadow: 0 8px 0 #6640ff, 0 16px 0 #141178, 0 24px 34px rgba(0,0,0,.58);
+  }
+  .blue-ribbon {
+    min-width: 82vw;
+    padding: 8px 18px;
+    font-size: 1rem;
+    box-shadow: 0 9px 0 rgba(0,0,0,.24), inset 0 0 0 1px rgba(255,255,255,.25);
+  }
+  .suit-row { display: flex; }
+
+  .play-now {
+    min-height: 76px;
+    width: 78vw;
+    align-self: center;
+    font-size: 2.45rem;
+    box-shadow: 0 10px 0 #9d2c00, 0 0 36px rgba(255, 218, 53, .46), inset 0 3px 0 rgba(255,255,255,.7);
+  }
+  .play-now span { width: 42px; height: 42px; }
+  .quick-actions {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .menu-card {
+    min-height: 108px;
+    border-radius: 24px;
+    gap: 4px;
+  }
+  .menu-card span { font-size: 2.25rem; }
+  .menu-card strong { font-size: 1.05rem; }
+  .menu-card small { display: block; font-size: .72rem; }
+
+  .player-panel {
+    padding: 12px;
+    border-radius: 26px;
+    gap: 9px;
+  }
+  .player-panel h2 { font-size: 1.12rem; }
+  .player-options { gap: 9px; }
+  .player-option {
+    min-height: 102px;
+    border-radius: 22px;
+    gap: 4px;
+  }
+  .player-option span { font-size: 2rem; }
+  .player-option strong { font-size: .9rem; }
+  .player-option small { display: block; font-size: .72rem; }
+  .casino-bottom { border-radius: 24px; }
+}
+
+@media (orientation: portrait) and (max-width: 430px) {
+  .casino-home {
+    gap: 8px;
+    grid-template-rows: auto minmax(268px, 40dvh) 66px 92px minmax(138px, 20dvh) 50px;
+  }
+  .online-pill, .settings-pill { min-height: 44px; padding: 6px 10px; }
+  .settings-pill span { display: none; }
+  .avatar-stack b { width: 24px; height: 24px; font-size: .72rem; }
+  .online-pill strong { font-size: .82rem; }
+  .online-pill small { font-size: .62rem; }
+  .royal-cards { height: 164px; margin-bottom: -48px; }
+  .royal-card { width: 78px; height: 118px; border-radius: 18px; padding: 10px; }
+  .royal-card strong { font-size: 1.25rem; }
+  .royal-card span { font-size: 3rem; }
+  .gold-two { font-size: 6rem; right: 8%; }
+  .crown { top: -25px; }
+  .casino-logo h1 { font-size: 5rem; }
+  .blue-ribbon { min-width: 84vw; padding: 6px 14px; font-size: .72rem; }
+  .suit-row b { width: 25px; height: 25px; }
+  .play-now { min-height: 62px; width: 82vw; font-size: 1.9rem; }
+  .play-now span { width: 34px; height: 34px; }
+  .menu-card { min-height: 88px; border-radius: 20px; }
+  .menu-card span { font-size: 1.7rem; }
+  .menu-card strong { font-size: .78rem; }
+  .menu-card small { font-size: .62rem; }
+  .player-panel { padding: 10px; border-radius: 22px; }
+  .player-panel h2 { font-size: .9rem; }
+  .player-option { min-height: 76px; border-radius: 17px; }
+  .player-option span { font-size: 1.45rem; }
+  .player-option strong { font-size: .64rem; }
+  .player-option small { font-size: .56rem; }
+  .casino-bottom a { min-height: 48px; gap: 5px; font-size: .55rem; }
+  .casino-bottom span { font-size: 1rem; }
+}

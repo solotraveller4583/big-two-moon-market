@@ -1,12 +1,12 @@
 {
-  "name": "Big Two Moon Market",
-  "short_name": "Moon Market",
+  "name": "Lucky2",
+  "short_name": "Lucky2",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
-  "background_color": "#140f2b",
-  "theme_color": "#140f2b",
-  "description": "A vivid, playful Big Two card game with AI rivals and moonlit oracle flair.",
+  "background_color": "#17122f",
+  "theme_color": "#17122f",
+  "description": "A fast Big Two card game with AI rivals, big mobile cards, and saved progress.",
   "icons": [
     {
       "src": "icon.svg",

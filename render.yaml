@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: big-two-moon-market
+    name: lucky2
     env: static
     buildCommand: ""
     staticPublishPath: .

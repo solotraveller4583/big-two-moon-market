@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const SAVE_KEY = 'big-two-moon-market-v5';
+  const SAVE_KEY = 'lucky2-save-v1';
   const RULES_HTML = `
     <ul>
       <li><strong>Card order:</strong> 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A, 2. In Big Two, 2 is the highest rank.</li>
@@ -26,9 +26,9 @@
     single: ['Small spark, big nerve.', 'The alley hushes for a beat.', 'A neat little slash through the night.'],
     pair: ['Two cards, one rhythm.', 'The crowd hears the bass line.', 'A tidy little power chord.'],
     triple: ['Three-card thunder!', 'That move rattled the lanterns.', 'Triple pressure — nice.'],
-    straight: ['The market path starts to snake forward.', 'Five in a row, smooth as silk.', 'A sleek line through the crowd.'],
+    straight: ['The lucky path starts to snake forward.', 'Five in a row, smooth as silk.', 'A sleek line through the crowd.'],
     flush: ['All one suit — very stylish.', 'The lights lean in to watch.', 'A polished color wave.'],
-    'full-house': ['Full house! The crowd loses its mind.', 'That is a heavyweight combo.', 'The market just got dramatic.'],
+    'full-house': ['Full house! The crowd loses its mind.', 'That is a heavyweight combo.', 'That trick just got dramatic.'],
     'four-kind': ['Four of a kind! Massive flex.', 'That was a thunder clap.', 'The lane is on fire.'],
     'straight-flush': ['Straight flush! Fireworks now!', 'That is a headline move.', 'Absolute festival chaos.']
   };
@@ -289,7 +289,8 @@
 
   function updateContinueButton() {
     const hasSave = Boolean(localStorage.getItem(SAVE_KEY));
-    els.continue.classList.toggle('hidden', !hasSave);
+    els.continue.classList.remove('hidden');
+    els.continue.setAttribute('aria-label', hasSave ? 'Continue saved game' : 'Start and save a game to continue later');
   }
 
   function cancelAiTimer() {
@@ -429,7 +430,7 @@
       els.playerCount.value = String(state.settings.players || 4);
       els.sound.textContent = state.sound ? '🔊' : '🔇';
       showGameScreen();
-      logState('The market returns from save. Pick up where you left off.');
+      logState('The table returns from save. Pick up where you left off.');
       render();
       scheduleAiTurn();
       return true;
@@ -443,7 +444,7 @@
     state.heat = Math.max(0, Math.min(100, state.heat + delta));
     els.heatFill.style.width = `${state.heat}%`;
     els.heatValue.textContent = `${state.heat}%`;
-    els.heatText.textContent = note || (state.heat >= 80 ? 'The moonlit crowd is roaring.' : state.heat >= 50 ? 'The moonlit crowd is leaning in.' : 'The moonlit crowd is waiting for a spark.');
+    els.heatText.textContent = note || (state.heat >= 80 ? 'The lucky crowd is roaring.' : state.heat >= 50 ? 'The lucky crowd is leaning in.' : 'The lucky crowd is waiting for a spark.');
   }
 
   function renderConfetti(intensity = 12) {
@@ -549,7 +550,7 @@
 
     const badge = document.createElement('div');
     badge.className = 'victory-badge';
-    badge.textContent = winner.isHuman ? 'Moon Market Champion' : 'Moon Market Match Over';
+    badge.textContent = winner.isHuman ? 'Lucky2 Champion' : 'Lucky2 Match Over';
 
     const title = document.createElement('h2');
     title.className = 'victory-title';
@@ -559,7 +560,7 @@
     message.className = 'victory-message';
     message.textContent = winner.isHuman
       ? 'You emptied your hand first. The lanterns burst and the crowd cheers your name.'
-      : `${winner.name} emptied their hand first. Tap New Market to try again.`;
+      : `${winner.name} emptied their hand first. Tap New Game to try again.`;
 
     const stats = document.createElement('div');
     stats.className = 'victory-stats';
@@ -570,7 +571,7 @@
 
     const newButton = document.createElement('button');
     newButton.className = 'primary';
-    newButton.textContent = 'New Market';
+    newButton.textContent = 'New Game';
     newButton.addEventListener('click', () => {
       overlay.remove();
       newGame();
@@ -652,7 +653,7 @@
     els.sound.textContent = '🔊';
     showGameScreen();
     updateHeat(10, 'The crowd is waiting for the 3♦ spotlight.');
-    logState(`The market begins. ${state.players[state.startingPlayer].name} holds the 3♦ and opens the table.`);
+    logState(`The table begins. ${state.players[state.startingPlayer].name} holds the 3♦ and opens the table.`);
     render();
     saveGame();
     playUiSound('start');
@@ -675,7 +676,7 @@
     els.trickCount.textContent = state.trick.play ? String(state.trick.play.count) : 'Open';
     els.turnLabel.textContent = state.gameOver ? 'Game over' : `${current.isHuman ? 'Your' : current.name + '\'s'} turn`;
     els.tableSubtitle.textContent = state.trick.play
-      ? `Beat ${describePlay(state.trick.play)} or pass if the market outsmarts you.`
+      ? `Beat ${describePlay(state.trick.play)} or pass if the table outsmarts you.`
       : (state.firstTrick ? 'Open with 3♦ to light the night.' : 'Table open — lead any legal hand.');
     els.trickHelp.textContent = state.trick.play ? 'Same count only, unless you are leading a fresh trick.' : OPENING_LINE;
   }
@@ -723,7 +724,7 @@
 
   function renderLogs() {
     els.logList.innerHTML = '';
-    const entries = state.logs.length ? state.logs : ['Tap cards to begin your first market move.'];
+    const entries = state.logs.length ? state.logs : ['Tap cards to begin your first Lucky2 move.'];
     entries.slice(0, 6).forEach(message => {
       const entry = document.createElement('div');
       entry.className = 'log-entry';
@@ -739,18 +740,32 @@
     button.dataset.cardId = card.id;
     button.setAttribute('aria-label', card.label);
 
-    const rank = document.createElement('div');
+    const glow = document.createElement('div');
+    glow.className = 'card-glow';
+
+    const corner = document.createElement('div');
+    corner.className = 'card-corner';
+    const rank = document.createElement('span');
     rank.className = 'card-rank';
     rank.textContent = card.rank;
+    const smallSuit = document.createElement('span');
+    smallSuit.className = 'card-suit-small';
+    smallSuit.textContent = card.suitSymbol;
+    corner.appendChild(rank);
+    corner.appendChild(smallSuit);
 
     const suit = document.createElement('div');
     suit.className = 'card-suit';
     suit.textContent = card.suitSymbol;
 
-    button.appendChild(rank);
+    button.appendChild(glow);
+    button.appendChild(corner);
     button.appendChild(suit);
 
-    if (!selectable) return button;
+    if (!selectable) {
+      button.classList.add('static');
+      return button;
+    }
     if (state.selected.has(card.id)) button.classList.add('selected');
     button.addEventListener('click', () => toggleSelection(card.id));
     return button;
@@ -881,14 +896,14 @@
   function passTurn(playerIndex) {
     state.trick.passes += 1;
     state.heat = Math.max(0, state.heat - 8);
-    logState(`${state.players[playerIndex].name} passed. The market keeps moving.`);
+    logState(`${state.players[playerIndex].name} passed. The table keeps moving.`);
     playUiSound('pass');
     if (state.trick.passes >= state.players.length - 1) {
       const leader = state.trick.leader;
       state.currentPlayer = leader;
       state.trick = { play: null, leader, passes: 0 };
       state.round += 1;
-      logState(`${state.players[leader].name} claimed the trick and opens a fresh market line.`);
+      logState(`${state.players[leader].name} claimed the trick and opens a fresh table line.`);
       updateHeat(10, 'A fresh trick means a fresh crowd cheer.');
       sparkle(1);
       clearSelection();
@@ -996,7 +1011,7 @@
     const hand = getHumanPlayer().hand;
     const chosen = pickAIMove(hand);
     if (!chosen) {
-      showOracle('Oracle says no', 'You cannot beat the current trick with your hand. Pass and wait for the market to reset.');
+      showOracle('Oracle says no', 'You cannot beat the current trick with your hand. Pass and wait for the table to reset.');
       return;
     }
     state.selected = new Set(chosen.cards.map(card => card.id));
@@ -1038,8 +1053,8 @@
 
   function shareGame() {
     const data = {
-      title: 'Big Two Moon Market',
-      text: 'I am playing Big Two Moon Market — a moonlit Big Two card game where the 3♦ starts the spell.',
+      title: 'Lucky2',
+      text: 'I am playing Lucky2 — a fast Big Two card game where the 3♦ starts the action.',
       url: window.location.href
     };
     try {
@@ -1048,7 +1063,7 @@
         return;
       }
       navigator.clipboard.writeText(`${data.text} ${data.url}`);
-      showOracle('Link copied', 'The market link was copied to your clipboard. Paste it into chats to invite friends.');
+      showOracle('Link copied', 'The Lucky2 link was copied to your clipboard. Paste it into chats to invite friends.');
     } catch (_) {
       showOracle('Share this game', `${data.text}<br><br>${data.url}`);
     }
@@ -1113,6 +1128,15 @@
     humanPlay();
   }
 
+  function updatePlayerChoiceUI() {
+    const selected = String(els.playerCount.value || '4');
+    document.querySelectorAll('[data-player-choice]').forEach(button => {
+      const active = button.dataset.playerChoice === selected;
+      button.classList.toggle('selected', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
   function bindEvents() {
     els.start.addEventListener('click', newGame);
     els.continue.addEventListener('click', () => {
@@ -1137,7 +1161,18 @@
     els.hint.addEventListener('click', chooseHint);
     els.sort.addEventListener('click', sortHumanHand);
     els.restart.addEventListener('click', newGame);
-    els.playerCount.addEventListener('change', updateContinueButton);
+    els.playerCount.addEventListener('change', () => {
+      updatePlayerChoiceUI();
+      updateContinueButton();
+    });
+    document.querySelectorAll('[data-player-choice]').forEach(button => {
+      button.addEventListener('click', () => {
+        els.playerCount.value = button.dataset.playerChoice || '4';
+        updatePlayerChoiceUI();
+        updateContinueButton();
+        playUiSound('tap');
+      });
+    });
   }
 
   function registerServiceWorker() {
@@ -1151,10 +1186,11 @@
     bindEvents();
     registerServiceWorker();
     updateContinueButton();
+    updatePlayerChoiceUI();
     els.helpText.innerHTML = RULES_HTML;
     els.helpTitle.textContent = 'How to Play';
     els.turnLabel.textContent = 'Ready';
-    els.heatText.textContent = 'The moonlit crowd is waiting for a spark.';
+    els.heatText.textContent = 'The lucky crowd is waiting for a spark.';
     els.heatValue.textContent = '0%';
     els.heatFill.style.width = '0%';
     renderLogs();

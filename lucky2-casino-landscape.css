@@ -1,0 +1,6 @@
+/* Extra cleanup for the desktop/landscape preview used during testing */
+@media (orientation: landscape) and (max-height: 700px) {
+  .blue-ribbon { display: none; }
+  .casino-logo h1 { margin-top: 4px; }
+  .royal-cards { margin-bottom: -10px; }
+}

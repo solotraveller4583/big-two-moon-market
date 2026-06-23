@@ -1,0 +1,35 @@
+/* Landscape/test viewport cleanup: keep logo readable instead of overlapping */
+@media (max-height: 700px) {
+  .royal-cards {
+    height: 86px;
+    margin-bottom: 0;
+  }
+  .royal-card {
+    width: 54px;
+    height: 78px;
+    border-radius: 13px;
+    padding: 8px;
+  }
+  .royal-card strong { font-size: 1rem; }
+  .royal-card span { font-size: 1.75rem; }
+  .rc-three { left: 28%; }
+  .rc-ace { left: 40%; }
+  .rc-two { left: 52%; }
+  .gold-two {
+    right: 24%;
+    bottom: 0;
+    font-size: 3.7rem;
+  }
+  .crown { top: -18px; right: -2px; }
+  .casino-logo h1 {
+    margin-top: -2px;
+    font-size: 3.45rem;
+    text-shadow: 0 5px 0 #6640ff, 0 10px 0 #141178, 0 16px 24px rgba(0,0,0,.5);
+  }
+  .blue-ribbon {
+    margin-top: 0;
+    min-width: 330px;
+    font-size: .62rem;
+    padding: 4px 14px;
+  }
+}
