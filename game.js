@@ -837,12 +837,12 @@
     if (state.selected.has(cardId)) state.selected.delete(cardId);
     else state.selected.add(cardId);
     playUiSound('tap');
-    renderHand();
+    render();
   }
 
   function clearSelection() {
     state.selected = new Set();
-    renderHand();
+    render();
   }
 
   function selectedCards() {
