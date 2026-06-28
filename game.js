@@ -50,6 +50,7 @@
     sound: true,
     gameOver: false,
     busy: false,
+    sortMode: 'rank',
     aiTimer: null,
     confettiLayer: null
   };
@@ -66,6 +67,7 @@
     playerCount: document.querySelector('#player-count'),
     start: document.querySelector('#start-button'),
     continue: document.querySelector('#continue-button'),
+    privateRoom: document.querySelector('#private-room-button'),
     rules: document.querySelector('#rules-button'),
     share: document.querySelector('#share-button'),
     back: document.querySelector('#back-button'),
@@ -142,6 +144,41 @@
 
   function sortCards(cards) {
     return [...cards].sort((a, b) => a.rankIndex - b.rankIndex || a.suitIndex - b.suitIndex);
+  }
+
+  function sortBySuit(cards) {
+    return [...cards].sort((a, b) => a.suitIndex - b.suitIndex || a.rankIndex - b.rankIndex);
+  }
+
+  function sortForCombos(cards) {
+    const rankCounts = new Map();
+    const suitCounts = new Map();
+    cards.forEach(card => {
+      rankCounts.set(card.rankIndex, (rankCounts.get(card.rankIndex) || 0) + 1);
+      suitCounts.set(card.suitIndex, (suitCounts.get(card.suitIndex) || 0) + 1);
+    });
+    return [...cards].sort((a, b) => {
+      const rankGroupDiff = (rankCounts.get(b.rankIndex) || 0) - (rankCounts.get(a.rankIndex) || 0);
+      if (rankGroupDiff) return rankGroupDiff;
+      const suitGroupDiff = (suitCounts.get(b.suitIndex) || 0) - (suitCounts.get(a.suitIndex) || 0);
+      if (suitGroupDiff) return suitGroupDiff;
+      return a.rankIndex - b.rankIndex || a.suitIndex - b.suitIndex;
+    });
+  }
+
+  function sortedHumanHand(cards) {
+    if (state.sortMode === 'suit') return sortBySuit(cards);
+    if (state.sortMode === 'combo') return sortForCombos(cards);
+    return sortCards(cards);
+  }
+
+  function sortModeLabel() {
+    return state.sortMode === 'suit' ? 'Suit/Flush' : state.sortMode === 'combo' ? 'Combo' : 'Rank';
+  }
+
+  function nextSortMode() {
+    state.sortMode = state.sortMode === 'rank' ? 'suit' : state.sortMode === 'suit' ? 'combo' : 'rank';
+    return state.sortMode;
   }
 
   function compareScores(a, b) {
@@ -789,7 +826,7 @@
   function renderHand() {
     els.hand.innerHTML = '';
     const human = getHumanPlayer();
-    sortCards(human.hand).forEach((card, index) => {
+    sortedHumanHand(human.hand).forEach((card, index) => {
       const tile = renderCardTile(card, true);
       tile.style.zIndex = String(index + 1);
       els.hand.appendChild(tile);
@@ -814,6 +851,7 @@
       els.play.disabled = !humanTurn || !canHumanAct() || !result?.ok;
       els.pass.disabled = !humanTurn || !state.trick.play;
       els.hint.disabled = !humanTurn;
+      els.sort.textContent = `Sort: ${sortModeLabel()}`;
       els.sort.disabled = !humanTurn;
     } else {
       els.play.disabled = true;
@@ -1059,8 +1097,16 @@
 
   function sortHumanHand() {
     const human = getHumanPlayer();
-    human.hand = sortCards(human.hand);
+    nextSortMode();
+    human.hand = sortedHumanHand(human.hand);
+    state.selected = new Set();
     render();
+  }
+
+  function showPrivateRoom() {
+    const code = Math.random().toString(36).slice(2, 7).toUpperCase();
+    const joinUrl = `${window.location.origin}${window.location.pathname}?room=${code}`;
+    showHelp('Private Room', `<div class="room-modal"><div class="modal-row"><strong>Room Code</strong><span>${code}</span></div><p>Private rooms need a realtime backend before two real users can play together. This button is now visible as the room entry point; next build should connect it to WebSocket/Firebase/Supabase matchmaking.</p><p><strong>Invite link:</strong><br>${joinUrl}</p></div>`);
   }
 
   function shareGame() {
@@ -1155,6 +1201,7 @@
       if (!restoreGame()) newGame();
     });
     els.rules.addEventListener('click', () => showHelp('How to Play', RULES_HTML));
+    els.privateRoom?.addEventListener('click', showPrivateRoom);
     els.share.addEventListener('click', shareGame);
     document.querySelector('#profile-button')?.addEventListener('click', () => showHelp('Player Profile', '<div class="profile-modal"><div class="modal-row"><strong>Guest Pro</strong><span>Level 8</span></div><div class="modal-row"><strong>League</strong><span>Bronze III</span></div><div class="modal-row"><strong>Best Streak</strong><span>3 wins</span></div><div class="modal-row"><strong>Card Back</strong><span>Neon Starter</span></div></div>'));
     document.querySelectorAll('[data-home-tab]').forEach(button => {

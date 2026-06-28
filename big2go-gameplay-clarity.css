@@ -9,7 +9,7 @@
   margin: 0 auto !important;
   padding: calc(env(safe-area-inset-top, 0px) + 8px) 10px calc(env(safe-area-inset-bottom, 0px) + 8px) !important;
   display: grid !important;
-  grid-template-rows: auto auto minmax(218px, 1fr) minmax(156px, 28dvh) auto !important;
+  grid-template-rows: auto auto minmax(206px, 1fr) minmax(164px, 29dvh) auto !important;
   gap: 7px !important;
   overflow: hidden !important;
   border: 0 !important;
@@ -160,7 +160,7 @@
   border: 1px solid rgba(255,255,255,.16) !important;
   border-radius: 20px !important;
   display: grid !important;
-  grid-template-rows: auto minmax(92px, 1fr) auto !important;
+  grid-template-rows: auto minmax(116px, 1fr) auto !important;
   gap: 4px !important;
   background: rgba(18,13,55,.58) !important;
   box-shadow: none !important;
@@ -197,7 +197,7 @@
 }
 
 #game-screen #trick-play {
-  min-height: 144px !important;
+  min-height: 118px !important;
   padding: 4px !important;
   display: flex !important;
   align-items: center !important;
@@ -266,10 +266,10 @@
 }
 
 #game-screen #trick-play:has(.card-tile:only-child) .card-tile {
-  width: clamp(84px, 21vw, 96px) !important;
-  height: clamp(118px, 29vw, 136px) !important;
-  min-width: clamp(84px, 21vw, 96px) !important;
-  flex-basis: clamp(84px, 21vw, 96px) !important;
+  width: clamp(78px, 19vw, 88px) !important;
+  height: clamp(110px, 27vw, 124px) !important;
+  min-width: clamp(78px, 19vw, 88px) !important;
+  flex-basis: clamp(78px, 19vw, 88px) !important;
 }
 
 #game-screen #trick-play .card-rank {
@@ -291,10 +291,13 @@
 
 #game-screen .trick-help,
 #game-screen .trick-meta {
+  position: relative !important;
+  z-index: 3 !important;
   margin: 0 !important;
+  min-height: 14px !important;
   font-size: 12px !important;
-  line-height: 1.2 !important;
-  color: rgba(255,255,255,.72) !important;
+  line-height: 1.15 !important;
+  color: rgba(255,255,255,.82) !important;
   text-align: center !important;
 }
 
