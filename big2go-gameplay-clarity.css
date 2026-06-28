@@ -9,13 +9,19 @@
   margin: 0 auto !important;
   padding: calc(env(safe-area-inset-top, 0px) + 8px) 10px calc(env(safe-area-inset-bottom, 0px) + 8px) !important;
   display: grid !important;
-  grid-template-rows: auto auto minmax(112px, 1fr) minmax(220px, 38dvh) auto !important;
+  grid-template-rows: auto auto minmax(178px, 1fr) minmax(176px, 30dvh) auto !important;
   gap: 7px !important;
   overflow: hidden !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: radial-gradient(circle at 50% 34%, #18224a 0%, #090823 58%, #050414 100%) !important;
   box-shadow: none !important;
+}
+
+#game-screen.b2g-match:not(.hidden) > * {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 /* 1) Compact status. No dashboard header. */
@@ -146,13 +152,16 @@
 
 /* 3) Center table pile: clear, not huge. */
 #game-screen .table-arena {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
   min-height: 0 !important;
-  padding: 10px !important;
+  padding: 6px 10px !important;
   border: 1px solid rgba(255,255,255,.16) !important;
   border-radius: 20px !important;
   display: grid !important;
-  grid-template-rows: auto minmax(58px, 1fr) auto !important;
-  gap: 6px !important;
+  grid-template-rows: auto minmax(92px, 1fr) auto !important;
+  gap: 4px !important;
   background: rgba(18,13,55,.58) !important;
   box-shadow: none !important;
 }
@@ -188,12 +197,12 @@
 }
 
 #game-screen #trick-play {
-  min-height: 58px !important;
+  min-height: 92px !important;
   padding: 4px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 4px !important;
+  gap: clamp(5px, 1.6vw, 8px) !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;
@@ -209,12 +218,28 @@
 }
 
 #game-screen #trick-play .card-tile {
-  width: 48px !important;
-  height: 68px !important;
-  min-width: 48px !important;
-  flex: 0 0 48px !important;
+  width: clamp(62px, 16vw, 72px) !important;
+  height: clamp(88px, 23vw, 102px) !important;
+  min-width: clamp(62px, 16vw, 72px) !important;
+  flex: 0 0 clamp(62px, 16vw, 72px) !important;
   transform: none !important;
   margin: 0 !important;
+  border-radius: 13px !important;
+  image-rendering: auto !important;
+  backface-visibility: hidden !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+#game-screen #trick-play .card-rank {
+  font-size: clamp(24px, 6.4vw, 30px) !important;
+}
+
+#game-screen #trick-play .card-suit-small {
+  font-size: clamp(18px, 4.8vw, 22px) !important;
+}
+
+#game-screen #trick-play .card-suit {
+  font-size: clamp(28px, 7vw, 36px) !important;
 }
 
 #game-screen .trick-help,

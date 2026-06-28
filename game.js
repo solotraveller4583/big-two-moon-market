@@ -6,7 +6,7 @@
     <ul>
       <li><strong>Card order:</strong> 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A, 2. In Big Two, 2 is the highest rank.</li>
       <li><strong>Suit order:</strong> diamonds, clubs, hearts, spades.</li>
-      <li><strong>Opening move:</strong> the first play of the game must be a single <strong>3♦</strong>.</li>
+      <li><strong>Opening player:</strong> whoever holds <strong>3♦</strong> starts the game, then may play any valid opening hand.</li>
       <li><strong>Match the count:</strong> beat a single with a single, a pair with a pair, a triple with a triple.</li>
       <li><strong>Five-card plays:</strong> straight, flush, full house, four of a kind, and straight flush.</li>
       <li><strong>Passing:</strong> if you cannot beat the current trick, pass. The last player to win the trick leads the next one.</li>
@@ -32,7 +32,7 @@
     'four-kind': ['Four of a kind! Massive flex.', 'That was a thunder clap.', 'The lane is on fire.'],
     'straight-flush': ['Straight flush! Fireworks now!', 'That is a headline move.', 'Absolute festival chaos.']
   };
-  const OPENING_LINE = 'The opening spotlight belongs to the 3♦.';
+  const OPENING_LINE = '3♦ holder starts — play any valid opening hand.';
 
   const state = {
     settings: { players: 4 },
@@ -277,10 +277,6 @@
     if (!current || !current.play) return true;
     if (candidate.count !== current.play.count) return false;
     return compareScores(candidate.score, current.play.score) > 0;
-  }
-
-  function isFirstMoveRule() {
-    return state.firstTrick && state.currentPlayer === state.startingPlayer;
   }
 
   function getHumanPlayer() {
@@ -659,8 +655,8 @@
     state.busy = false;
     els.sound.textContent = '🔊';
     showGameScreen();
-    updateHeat(10, 'The crowd is waiting for the 3♦ spotlight.');
-    logState(`The table begins. ${state.players[state.startingPlayer].name} holds the 3♦ and opens the table.`);
+    updateHeat(10, 'The opening player can lead any valid Big Two hand.');
+    logState(`The table begins. ${state.players[state.startingPlayer].name} holds the 3♦ and starts the game.`);
     render();
     saveGame();
     playUiSound('start');
@@ -679,7 +675,7 @@
     const cards = selectedCards();
     if (!cards.length) {
       if (state.trick.play) return `Select cards to beat ${describePlay(state.trick.play)}, or pass.`;
-      return state.firstTrick ? 'Lead with the 3♦.' : 'You lead. Play any valid combo.';
+      return state.firstTrick ? 'You hold 3♦. Lead any valid opening hand.' : 'You lead. Play any valid combo.';
     }
     const result = validateHumanPlay(cards);
     if (result.ok) return `${describePlay(result.play)} · can play`;
@@ -691,7 +687,7 @@
     const current = state.players[state.currentPlayer];
     const requirement = state.trick.play
       ? `Beat ${describePlay(state.trick.play)}`
-      : (state.firstTrick ? 'Lead 3♦' : 'You lead');
+      : (state.firstTrick ? 'Opening hand' : 'You lead');
     els.playerLeftCount.textContent = String(cardsLeft(human));
     els.roundCount.textContent = String(state.round);
     els.trickCount.textContent = state.trick.play ? String(state.trick.play.count) : 'Open';
@@ -850,16 +846,9 @@
     return sortCards([...state.selected].map(id => handMap.get(id)).filter(Boolean));
   }
 
-  function isOpeningThreeDiamonds(cards) {
-    return cards.length === 1 && cards[0].rankIndex === 0 && cards[0].suitKey === 'D';
-  }
-
   function validateHumanPlay(cards) {
     const play = buildPlay(cards);
     if (!play) return { ok: false, reason: 'That selection is not a valid Big Two hand.' };
-    if (isFirstMoveRule() && !isOpeningThreeDiamonds(cards)) {
-      return { ok: false, reason: 'The opening move must be the 3♦ as a single card.' };
-    }
     if (state.trick.play && !playBeats(play, state.trick)) {
       return { ok: false, reason: `You must beat ${describePlay(state.trick.play)} with a stronger hand of the same size.` };
     }
@@ -986,7 +975,6 @@
   function legalCandidates(hand) {
     const candidates = getCandidates(hand);
     if (!state.trick.play) {
-      if (isFirstMoveRule()) return candidates.filter(play => isOpeningThreeDiamonds(play.cards));
       return candidates;
     }
     return candidates.filter(play => playBeats(play, state.trick));
@@ -995,8 +983,6 @@
   function pickAIMove(hand) {
     const candidates = legalCandidates(hand);
     if (!candidates.length) return null;
-    if (isFirstMoveRule()) return candidates.find(play => isOpeningThreeDiamonds(play.cards)) || null;
-
     const leadMode = !state.trick.play;
     const handSize = hand.length;
 
