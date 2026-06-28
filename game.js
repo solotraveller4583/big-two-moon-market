@@ -551,22 +551,80 @@
     freqs.forEach(freq => playTone(freq, duration, type, gain, when));
   }
 
+  function playNoise(duration = 0.08, gain = 0.025, when = 0, filterFreq = 1200) {
+    const ctx = getAudioContext();
+    if (!ctx || !state.sound) return;
+    const start = ctx.currentTime + when;
+    const buffer = ctx.createBuffer(1, Math.max(1, Math.floor(ctx.sampleRate * duration)), ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+    const source = ctx.createBufferSource();
+    const filter = ctx.createBiquadFilter();
+    const amp = ctx.createGain();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(filterFreq, start);
+    filter.Q.setValueAtTime(6, start);
+    amp.gain.setValueAtTime(0.0001, start);
+    amp.gain.exponentialRampToValueAtTime(gain, start + 0.006);
+    amp.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    source.buffer = buffer;
+    source.connect(filter);
+    filter.connect(amp);
+    amp.connect(audio.master);
+    source.start(start);
+    source.stop(start + duration + 0.02);
+  }
+
   function playUiSound(kind) {
     if (!state.sound) return;
     unlockAudio().then(ctx => {
       if (!ctx) return;
-      const tones = {
-        start: [[261.63, 0.08], [329.63, 0.08, 0.08], [392, 0.12, 0.16]],
-        tap: [[523.25, 0.06], [659.25, 0.05, 0.05]],
-        play: [[392, 0.08], [493.88, 0.08, 0.08], [659.25, 0.12, 0.16]],
-        pass: [[220, 0.09], [174.61, 0.1, 0.08]],
-        error: [[196, 0.12], [174.61, 0.14, 0.1], [146.83, 0.18, 0.2]],
-        ai: [[329.63, 0.05], [392, 0.06, 0.06]],
-        win: [[523.25, 0.12], [659.25, 0.12, 0.12], [783.99, 0.14, 0.24]]
+      const sequences = {
+        start: [
+          { f: 196, d: .07, w: 0, type: 'triangle', g: .032 },
+          { f: 261.63, d: .08, w: .06, type: 'triangle', g: .034 },
+          { f: 329.63, d: .09, w: .12, type: 'sine', g: .035 },
+          { chord: [392, 523.25, 659.25], d: .18, w: .2, type: 'triangle', g: .018 }
+        ],
+        tap: [
+          { f: 720, d: .035, w: 0, type: 'square', g: .018 },
+          { f: 960, d: .04, w: .035, type: 'sine', g: .018 }
+        ],
+        play: [
+          { noise: true, d: .06, w: 0, g: .018, ff: 1800 },
+          { f: 392, d: .06, w: .02, type: 'triangle', g: .032 },
+          { f: 587.33, d: .07, w: .08, type: 'triangle', g: .032 },
+          { f: 783.99, d: .13, w: .15, type: 'sine', g: .035 },
+          { chord: [523.25, 659.25, 783.99], d: .16, w: .22, type: 'triangle', g: .016 }
+        ],
+        pass: [
+          { noise: true, d: .05, w: 0, g: .014, ff: 650 },
+          { f: 246.94, d: .08, w: .01, type: 'sine', g: .026 },
+          { f: 196, d: .12, w: .08, type: 'triangle', g: .024 }
+        ],
+        error: [
+          { f: 220, d: .09, w: 0, type: 'sawtooth', g: .026 },
+          { f: 185, d: .12, w: .07, type: 'sawtooth', g: .022 },
+          { noise: true, d: .05, w: .03, g: .012, ff: 420 }
+        ],
+        ai: [
+          { f: 329.63, d: .045, w: 0, type: 'triangle', g: .02 },
+          { f: 440, d: .05, w: .05, type: 'triangle', g: .02 },
+          { noise: true, d: .035, w: .02, g: .01, ff: 1400 }
+        ],
+        win: [
+          { noise: true, d: .14, w: 0, g: .024, ff: 2600 },
+          { f: 523.25, d: .12, w: .02, type: 'triangle', g: .034 },
+          { f: 659.25, d: .12, w: .13, type: 'triangle', g: .034 },
+          { f: 783.99, d: .16, w: .25, type: 'triangle', g: .036 },
+          { chord: [659.25, 783.99, 1046.5], d: .32, w: .42, type: 'sine', g: .018 }
+        ]
       };
-      const plan = tones[kind] || tones.tap;
-      plan.forEach(([freq, duration, when = 0, type = 'sine', gain = 0.04]) => {
-        playTone(freq, duration, type, gain, when);
+      const plan = sequences[kind] || sequences.tap;
+      plan.forEach(step => {
+        if (step.noise) playNoise(step.d, step.g, step.w, step.ff);
+        else if (step.chord) playChord(step.chord, step.d, step.type, step.g, step.w);
+        else playTone(step.f, step.d, step.type, step.g, step.w);
       });
     });
   }
